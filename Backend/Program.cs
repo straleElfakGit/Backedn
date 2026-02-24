@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll", b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
@@ -17,8 +21,12 @@ builder.Services.AddScoped<PlayerRepository>();
 builder.Services.AddScoped<PropertyFieldRepository>();
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<SrbopolyContext> (Options => 
-Options.UseSqlServer(builder.Configuration.GetConnectionString("SrbopolyCS")));
+
+// builder.Services.AddDbContext<SrbopolyContext> (Options => 
+// Options.UseSqlServer(builder.Configuration.GetConnectionString("SrbopolyCS")));
+
+builder.Services.AddDbContext<SrbopolyContext>(options => 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("SrbopolyCS")));
 
 var app = builder.Build();
 
@@ -28,6 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 app.MapControllers();

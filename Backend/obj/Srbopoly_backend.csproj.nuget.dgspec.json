@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\Srbopoly\\Backend\\Srbopoly_backend.csproj": {}
+    "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\WebServisi\\Backend\\Srbopoly_backend.csproj": {}
   },
   "projects": {
-    "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\Srbopoly\\Backend\\Srbopoly_backend.csproj": {
+    "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\WebServisi\\Backend\\Srbopoly_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\Srbopoly\\Backend\\Srbopoly_backend.csproj",
+        "projectUniqueName": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\WebServisi\\Backend\\Srbopoly_backend.csproj",
         "projectName": "Srbopoly_backend",
-        "projectPath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\Srbopoly\\Backend\\Srbopoly_backend.csproj",
+        "projectPath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\WebServisi\\Backend\\Srbopoly_backend.csproj",
         "packagesPath": "C:\\Users\\Strahinja\\.nuget\\packages\\",
-        "outputPath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\Srbopoly\\Backend\\obj\\",
+        "outputPath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\WebServisi\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Strahinja\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -63,6 +63,10 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

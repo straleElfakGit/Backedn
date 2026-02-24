@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Srbopoly_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class IntV1 : Migration
+    public partial class InitialPostgre : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,14 +16,14 @@ namespace Srbopoly_backend.Migrations
                 name: "Games",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    MaxTurns = table.Column<int>(type: "int", nullable: false),
-                    CurrentTurn = table.Column<int>(type: "int", nullable: false),
-                    CurrentPlayerIndex = table.Column<int>(type: "int", nullable: false),
-                    RewardCardsDeckIds = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SurpriseCardsDeckIds = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    MaxTurns = table.Column<int>(type: "integer", nullable: false),
+                    CurrentTurn = table.Column<int>(type: "integer", nullable: false),
+                    CurrentPlayerIndex = table.Column<int>(type: "integer", nullable: false),
+                    RewardCardsDeckIds = table.Column<List<int>>(type: "integer[]", nullable: false),
+                    SurpriseCardsDeckIds = table.Column<List<int>>(type: "integer[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,10 +34,10 @@ namespace Srbopoly_backend.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Username = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Points = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,9 +48,9 @@ namespace Srbopoly_backend.Migrations
                 name: "Boards",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GameId = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,14 +67,14 @@ namespace Srbopoly_backend.Migrations
                 name: "Players",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Balance = table.Column<int>(type: "int", nullable: false),
-                    Position = table.Column<int>(type: "int", nullable: false),
-                    Color = table.Column<int>(type: "int", nullable: false),
-                    IsInJail = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Balance = table.Column<int>(type: "integer", nullable: false),
+                    Position = table.Column<int>(type: "integer", nullable: false),
+                    Color = table.Column<int>(type: "integer", nullable: false),
+                    IsInJail = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,13 +97,13 @@ namespace Srbopoly_backend.Migrations
                 name: "PropertyFields",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GameFieldID = table.Column<int>(type: "int", nullable: false),
-                    OwnerID = table.Column<int>(type: "int", nullable: true),
-                    Houses = table.Column<int>(type: "int", nullable: false),
-                    Hotels = table.Column<int>(type: "int", nullable: false),
-                    BoardId = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GameFieldID = table.Column<int>(type: "integer", nullable: false),
+                    OwnerID = table.Column<int>(type: "integer", nullable: true),
+                    Houses = table.Column<int>(type: "integer", nullable: false),
+                    Hotels = table.Column<int>(type: "integer", nullable: false),
+                    BoardId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
