@@ -124,4 +124,21 @@ public class GameRepository : IGameRepository
     {
         await _context.SaveChangesAsync();
     }
+
+    public async Task<List<Game>> GetGamesByUserIdAsync(int userId)
+    {
+        var entities = await _context.Games
+            .Include(g => g.Players)
+                .ThenInclude(p => p.User)
+            .Include(g => g.Board)
+                .ThenInclude(b => b.PropertyFields)
+            .Where(g => g.Players.Any(p => p.UserId == userId))
+            .ToListAsync();
+
+        var dtos = entities.Select(GameMapperDE.ToDto).ToList();
+        var businessGames = dtos.Select(GameMapper.ToBusiness).ToList();
+
+        return businessGames;
+    }
+
 }

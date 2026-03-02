@@ -9,4 +9,5 @@ public interface IGameRepository
     Task<List<Game>> GetAllAsync();
     Task DeleteAsync(Game game);
     Task SaveChangesAsync();
+    Task<List<Game>> GetGamesByUserIdAsync(int userId);
 }

@@ -99,4 +99,25 @@ public class GameController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("GetByUserId/{userId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<List<GameDto>>> GetByUserId(int userId)
+    {
+        try
+        {
+            var games = await _repository.GetGamesByUserIdAsync(userId);
+            
+            if (games == null || !games.Any())
+                return NotFound($"Nisu pronađene igre za korisnika sa ID {userId}.");
+
+            return Ok(games.Select(GameMapper.ToEntity).ToList());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
