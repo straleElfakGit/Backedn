@@ -10,8 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options => {
-    options.AddPolicy("AllowAll", b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+// builder.Services.AddCors(options => {
+//     options.AddPolicy("AllowAll", b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+// });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", b =>
+        b.SetIsOriginAllowed(_ => true)
+         .AllowAnyMethod()
+         .AllowAnyHeader()
+         .AllowCredentials());
 });
 
 var rabbitConnection = new RabbitMqConnection(builder.Configuration);
