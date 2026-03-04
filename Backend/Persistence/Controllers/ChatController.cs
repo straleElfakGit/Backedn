@@ -7,7 +7,7 @@ using System.Data;
 namespace Backend.Persistence.Controllers;
 
 [ApiController]
-[Route("api/chat")]
+[Route("chat")]
 public class ChatController : ControllerBase
 {
     private readonly IChatPublisher _chatPublisher;
@@ -37,6 +37,6 @@ public class ChatController : ControllerBase
 
         await _chatPublisher.PublishAsync(gameId, message);
 
-        return Ok("Poruka je uspešno poslata.");
+        return NoContent();
     }
 }
