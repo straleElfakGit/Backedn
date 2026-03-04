@@ -3,6 +3,7 @@ using System.Text.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Backend.Domain;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Srbopoly.Services.Messaging;
 
@@ -10,11 +11,14 @@ public class RabbitMqChatConsumer : BackgroundService
 {
     private readonly IRabbitMqConnection _rabbitMqConnection;
     private readonly IChannel _channel;
+    private readonly IHubContext<ChatHub.ChatHub> _chatHub;
 
-    public RabbitMqChatConsumer(IRabbitMqConnection rabbitMqConnection)
+    public RabbitMqChatConsumer(IRabbitMqConnection rabbitMqConnection,
+     IHubContext<ChatHub.ChatHub> chatHub)
     {
         _rabbitMqConnection = rabbitMqConnection;
         _channel = _rabbitMqConnection.GetChannel();
+         _chatHub = chatHub;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -41,7 +45,13 @@ public class RabbitMqChatConsumer : BackgroundService
 
             var message = JsonSerializer.Deserialize<ChatMessage>(json);
 
-            Console.WriteLine($"{message?.Username}: {message?.Text}");
+             if (message != null)
+            {
+                await _chatHub.Clients.Group($"game-{message.GameId}")
+                                      .SendAsync("ReceiveMessage", message);
+            }
+
+           //Console.WriteLine($"{message?.Username}: {message?.Text}");
 
             await _channel.BasicAckAsync(args.DeliveryTag, false);
         };

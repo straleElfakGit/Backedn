@@ -2,6 +2,7 @@ using Backend.Persistence.Entities;
 using Backend.Repositories;
 using Backend.Repository;
 using Srbopoly.Services.Messaging;
+using Srbopoly.Services.Messaging.ChatHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddScoped<BoardRepository>();
 builder.Services.AddScoped<PlayerRepository>();
 builder.Services.AddScoped<PropertyFieldRepository>();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddControllers();
 
 // builder.Services.AddDbContext<SrbopolyContext> (Options => 
@@ -50,5 +53,6 @@ app.UseCors("AllowAll");
 
 //app.UseHttpsRedirection();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
