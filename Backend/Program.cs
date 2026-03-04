@@ -1,6 +1,7 @@
 using Backend.Persistence.Entities;
 using Backend.Repositories;
 using Backend.Repository;
+using Srbopoly.Services.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ builder.Services.AddCors(options => {
     options.AddPolicy("AllowAll", b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+var rabbitConnection = new RabbitMqConnection(builder.Configuration);
+await rabbitConnection.InitializeAsync();
+builder.Services.AddSingleton(rabbitConnection);
+builder.Services.AddSingleton<IRabbitMqConnection>(rabbitConnection);
+builder.Services.AddScoped<IChatPublisher, RabbitMqChatPublisher>();
+builder.Services.AddHostedService<RabbitMqChatConsumer>();
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
