@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "e6Hh7u2vbU11tz5MwTuofwritgOKcRmfTVHLtyQ5kps=",
-  "Source": "Srbopoly_backend",
-  "BasePath": "_content/Srbopoly_backend",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"N8R6lKISQyaFryrHREKtpkgXDN3jwCPjfWNhE1XVF8Q=","Source":"Srbopoly_backend","BasePath":"_content/Srbopoly_backend","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

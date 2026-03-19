@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/C/UAQz6ooA=",
+  "dgSpecHash": "ltiDHLiNUFg=",
   "success": true,
-  "projectFilePath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Aips\\WebServisi\\Backend\\Srbopoly_backend.csproj",
+  "projectFilePath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Arhitektura i projektovanje softvera\\Projekat_Perzistencija_backend\\Backedn\\Backend\\Srbopoly_backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Strahinja\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Strahinja\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

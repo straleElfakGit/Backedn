@@ -1,6 +1,7 @@
 using Backend.Persistence.Entities;
 using Backend.Persistence.Mappers;
 using Backend.Repositories;
+using Backend.Persistence.DTO;
 
 namespace Backend.Persistence.Controllers;
 
@@ -18,14 +19,15 @@ public class UserController : ControllerBase
     [HttpPost("CreateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> CreateUser([FromBody] string username)
+    public async Task<ActionResult> CreateUser([FromBody] CreateUserRequestDTO request)
     {
         try
             {
-                if (string.IsNullOrWhiteSpace(username))
-                    return BadRequest("Username nije validan.");
+                if (string.IsNullOrWhiteSpace(request.Username)||
+                    string.IsNullOrWhiteSpace(request.Password))
+                    return BadRequest("Username i password su obavezni.");
 
-                var user = await _repository.CreateUserAsync(username);
+                var user = await _repository.CreateUserAsync(request.Username, request.Password);
                 return Ok(UserMapper.ToEntity(user));
             }
             catch (InvalidOperationException ioe)
@@ -176,6 +178,24 @@ public class UserController : ControllerBase
             {
                 return BadRequest(e.Message);
             }
+    }
+
+    [HttpPost("Login")]
+    public async Task<ActionResult> Login([FromBody] LoginUserRequestDTO request)
+    {
+        try
+        {
+            var user = await _repository.AuthenticateAsync(request.Username, request.Password);
+
+            if (user == null)
+                return Unauthorized("Pogrešan username ili password.");
+
+            return Ok(UserMapper.ToEntity(user));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
 

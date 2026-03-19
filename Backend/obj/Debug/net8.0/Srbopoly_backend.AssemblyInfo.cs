@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Srbopoly_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4216f73ac95e1ac9ca1900419cbbcf9d593dd442")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9171c6db0631d1e471f3f3821a82c164a05a353")]
 [assembly: System.Reflection.AssemblyProductAttribute("Srbopoly_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Srbopoly_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

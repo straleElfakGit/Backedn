@@ -5,17 +5,19 @@ using Backend.Persistence.DTO;
 using Backend.Persistence.Entities;
 using Backend.Persistence.Mappers;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.AspNetCore.Identity;
 
 public class UserRepository
 {
     private readonly SrbopolyContext _context;
+    private readonly PasswordHasher<UserEntity> _passwordHasher = new();
 
     public UserRepository(SrbopolyContext context)
     {
         _context = context;
     }
 
-    public async Task<User> CreateUserAsync(string username)
+    public async Task<User> CreateUserAsync(string username, string password)
     {
         var exists = await _context.Users.AnyAsync(u => u.Username == username);
         if (exists) throw new InvalidOperationException("Username već postoji.");
@@ -25,6 +27,8 @@ public class UserRepository
             Username = username,
             Points = 0
         };
+
+         userEntity.PasswordHash = _passwordHasher.HashPassword(userEntity, password);
 
         await _context.Users.AddAsync(userEntity);
         await _context.SaveChangesAsync();
@@ -101,5 +105,26 @@ public class UserRepository
         var users = await query.ToListAsync();
         var dtos = users.Select(UserMapperDE.ToDto).ToList();
         return dtos.Select(UserMapper.ToBusiness).ToList();
+    }
+
+    public async Task<User?> AuthenticateAsync(string username, string password)
+    {
+        var userEntity = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == username);
+
+        if (userEntity == null)
+            return null;
+
+        var result = _passwordHasher.VerifyHashedPassword(
+            userEntity,
+            userEntity.PasswordHash,
+            password
+        );
+
+        if (result == PasswordVerificationResult.Failed)
+            return null;
+
+        var userDto = UserMapperDE.ToDto(userEntity);
+        return UserMapper.ToBusiness(userDto);
     }
 }

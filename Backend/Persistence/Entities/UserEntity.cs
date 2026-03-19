@@ -10,6 +10,8 @@ namespace Backend.Persistence.Entities
         [Required]
         [MaxLength(20)]
         public string Username { get; set; } = String.Empty;
+        [Required]
+        public string PasswordHash { get; set; } = string.Empty;
         public int Points { get; set; }
 
         [JsonIgnore]
