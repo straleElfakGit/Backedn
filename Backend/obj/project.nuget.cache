@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ltiDHLiNUFg=",
+  "dgSpecHash": "slzhh/ccwc4=",
   "success": true,
   "projectFilePath": "C:\\Podaci\\Fakultet\\Semestar_VII\\Arhitektura i projektovanje softvera\\Projekat_Perzistencija_backend\\Backedn\\Backend\\Srbopoly_backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Strahinja\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Strahinja\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\Strahinja\\.nuget\\packages\\hashids.net\\1.7.0\\hashids.net.1.7.0.nupkg.sha512",
     "C:\\Users\\Strahinja\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Strahinja\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.19\\microsoft.aspnetcore.openapi.8.0.19.nupkg.sha512",
     "C:\\Users\\Strahinja\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

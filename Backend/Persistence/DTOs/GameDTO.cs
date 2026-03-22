@@ -5,6 +5,7 @@ namespace Backend.Persistence.DTO;
 public class GameDto
 {
     public int Id { get; set; }
+    public string AccessCode { get; set; } = string.Empty;
     public GameStatus Status { get; set; }
     public int MaxTurns { get; set; }
     public int CurrentTurn { get; set; }

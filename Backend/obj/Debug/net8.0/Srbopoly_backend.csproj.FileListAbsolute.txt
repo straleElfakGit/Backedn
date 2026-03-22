@@ -438,3 +438,4 @@ C:\Podaci\Fakultet\Semestar_VII\Arhitektura i projektovanje softvera\Projekat_Pe
 C:\Podaci\Fakultet\Semestar_VII\Arhitektura i projektovanje softvera\Projekat_Perzistencija_backend\Backedn\Backend\obj\Debug\net8.0\Srbopoly_backend.pdb
 C:\Podaci\Fakultet\Semestar_VII\Arhitektura i projektovanje softvera\Projekat_Perzistencija_backend\Backedn\Backend\obj\Debug\net8.0\Srbopoly_backend.genruntimeconfig.cache
 C:\Podaci\Fakultet\Semestar_VII\Arhitektura i projektovanje softvera\Projekat_Perzistencija_backend\Backedn\Backend\obj\Debug\net8.0\ref\Srbopoly_backend.dll
+C:\Podaci\Fakultet\Semestar_VII\Arhitektura i projektovanje softvera\Projekat_Perzistencija_backend\Backedn\Backend\bin\Debug\net8.0\Hashids.net.dll

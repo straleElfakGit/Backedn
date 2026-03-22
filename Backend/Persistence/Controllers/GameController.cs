@@ -3,6 +3,7 @@ using Backend.Persistence.DTO;
 using Backend.Domain;
 using Backend.Repository;
 using Backend.Persistence.Mappers;
+using Backend.Services.GameCode;
 
 namespace Backend.Persistence.Controllers;
 
@@ -11,10 +12,12 @@ namespace Backend.Persistence.Controllers;
 public class GameController : ControllerBase
 {
     private readonly IGameRepository _repository;
+    private readonly GameCodeService _codeService;
 
-    public GameController(IGameRepository repository)
+    public GameController(IGameRepository repository, GameCodeService codeService)
     {
         _repository = repository;
+        _codeService = codeService;
     }
 
     [HttpPost("CreateGame")]
@@ -35,7 +38,11 @@ public class GameController : ControllerBase
 
             var createdGame = await _repository.CreateAsync(game);
             game.ID = createdGame.ID;
-            return Ok(GameMapper.ToEntity(createdGame));
+
+            var gameDto = GameMapper.ToEntity(createdGame);
+            gameDto.AccessCode = _codeService.EncodeGameId(createdGame.ID);
+
+            return Ok(gameDto);
         }
         catch (Exception e)
         {
@@ -114,6 +121,35 @@ public class GameController : ControllerBase
                 return NotFound($"Nisu pronađene igre za korisnika sa ID {userId}.");
 
             return Ok(games.Select(GameMapper.ToEntity).ToList());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("GetByAccessCode/{accessCode}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<GameDto>> GetByAccessCode(string accessCode)
+    {
+        try
+        {
+            var gameId = _codeService.DecodeGameCode(accessCode);
+            if (gameId == null)
+            {
+                return BadRequest("Nevalidan pristupni kod.");
+            }
+
+            var game = await _repository.GetByIdAsync(gameId.Value);            
+            if (game == null)
+                return NotFound($"Igra sa pristupnim kodom {accessCode} nije pronađena.");
+
+            var gameDto = GameMapper.ToEntity(game);
+            gameDto.AccessCode = accessCode;
+
+            return Ok(gameDto);
         }
         catch (Exception e)
         {

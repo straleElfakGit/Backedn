@@ -3,6 +3,7 @@ using Backend.Repositories;
 using Backend.Repository;
 using Srbopoly.Services.Messaging;
 using Srbopoly.Services.Messaging.ChatHub;
+using Backend.Services.GameCode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddSingleton<IRabbitMqConnection>(rabbitConnection);
 builder.Services.AddScoped<IChatPublisher, RabbitMqChatPublisher>();
 builder.Services.AddHostedService<RabbitMqChatConsumer>();
 
+builder.Services.AddSingleton<GameCodeService>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<CardRepository>();
