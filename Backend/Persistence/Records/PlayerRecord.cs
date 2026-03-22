@@ -9,3 +9,12 @@ public record CreatePlayerRequest(
     Color Color,
     bool IsInJail
 );
+
+public record JoinGameRequest(
+    int UserId,
+    string Accesscode,
+    int Balance,
+    int Position,
+    Color Color,
+    bool IsInJail
+);

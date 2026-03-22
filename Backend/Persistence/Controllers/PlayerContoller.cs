@@ -3,6 +3,7 @@ using Backend.Persistence.DTO;
 using Backend.Persistence.Records;
 using Backend.Repositories;
 using Backend.Persistence.Mappers;
+using Backend.Services.GameCode;
 
 namespace Backend.Persistence.Controllers;
 
@@ -11,10 +12,51 @@ namespace Backend.Persistence.Controllers;
 public class PlayerController : ControllerBase
 {
     private readonly PlayerRepository _repository;
+    private readonly GameCodeService _codeService;
 
-    public PlayerController(PlayerRepository repository)
+    public PlayerController(PlayerRepository repository, GameCodeService codeService)
     {
         _repository = repository;
+        _codeService = codeService;
+    }
+
+    [HttpPost("JoinGame")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<PlayerDto>> JoinGame([FromBody] JoinGameRequest request)
+    {
+        try
+        {
+            var gameId = _codeService.DecodeGameCode(request.Accesscode);
+            
+            if (gameId == null)
+                return BadRequest("Nevalidan pristupni kod.");
+
+            var createPlayerRequest = new CreatePlayerRequest(
+                gameId.Value,
+                request.UserId,
+                request.Balance,
+                request.Position,
+                request.Color,
+                request.IsInJail
+            );
+            var player = await _repository.CreatePlayerAsync(createPlayerRequest);
+            
+            var playerDto = PlayerMapper.ToDTO(player);
+            playerDto.UserId = request.UserId;
+            playerDto.Username = player?.Username ?? "";
+            
+            return Ok(playerDto);
+        }
+        catch (KeyNotFoundException knf)
+        {
+            return NotFound(knf.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost("CreatePlayer")]
