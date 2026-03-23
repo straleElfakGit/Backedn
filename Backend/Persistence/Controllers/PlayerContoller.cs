@@ -34,8 +34,8 @@ public class PlayerController : ControllerBase
                 return BadRequest("Nevalidan pristupni kod.");
 
             var createPlayerRequest = new CreatePlayerRequest(
-                gameId.Value,
                 request.UserId,
+                gameId.Value,
                 request.Balance,
                 request.Position,
                 request.Color,

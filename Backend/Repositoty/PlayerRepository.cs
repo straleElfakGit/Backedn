@@ -21,9 +21,20 @@ public class PlayerRepository
         if (userEntity == null)
             throw new KeyNotFoundException($"User sa ID {request.UserId} ne postoji.");
 
-        var gameEntity = await _context.Games.FindAsync(request.GameId);
+        // var isAlreadyInGame = await _context.Players
+        //     .AnyAsync(p => p.UserId == request.UserId);
+        // if (isAlreadyInGame)
+        //     throw new InvalidOperationException("Korisnik je već učesnik u jednoj partiji.");
+
+
+        var gameEntity = await _context.Games
+            .Include(g => g.Players)
+            .FirstOrDefaultAsync(g => g.ID == request.GameId);
         if (gameEntity == null)
             throw new KeyNotFoundException($"Game sa ID {request.GameId} ne postoji.");
+
+        if (gameEntity.Players.Count >= 4)
+            throw new InvalidOperationException("Partija je popunjena. Maksimalan broj igrača je 4.");
 
         if (request.Balance < 0)
             throw new InvalidOperationException("Balance ne može biti negativan.");
@@ -71,10 +82,25 @@ public class PlayerRepository
 
     public async Task DeleteAsync(int id)
     {
-        var entity = await _context.Players.FindAsync(id);
-        if (entity == null) throw new KeyNotFoundException($"Player sa ID {id} nije pronađen.");
+        var playerEntity = await _context.Players.FindAsync(id);
+        if (playerEntity == null) throw new KeyNotFoundException($"Player sa ID {id} nije pronađen.");
 
-        _context.Players.Remove(entity);
+        var gameId = playerEntity.GameId;
+        _context.Players.Remove(playerEntity);
         await _context.SaveChangesAsync();
+
+        var remainingPlayersCount = await _context.Players
+            .Where(p => p.GameId == gameId)
+            .CountAsync();
+
+        if (remainingPlayersCount == 0)
+        {
+            var gameEntity = await _context.Games.FindAsync(gameId);
+            if (gameEntity != null)
+            {
+                _context.Games.Remove(gameEntity);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
