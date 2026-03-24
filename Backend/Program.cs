@@ -35,6 +35,8 @@ builder.Services.AddSingleton<GameCodeService>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<CardRepository>();
+builder.Services.AddScoped<LobbyRepository>();
+builder.Services.AddScoped<LobbyPlayerRepository>();
 builder.Services.AddScoped<BoardRepository>();
 builder.Services.AddScoped<PlayerRepository>();
 builder.Services.AddScoped<PropertyFieldRepository>();

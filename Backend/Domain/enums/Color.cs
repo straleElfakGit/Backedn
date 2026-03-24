@@ -6,8 +6,7 @@
         Blue,
         Green,
         Yellow,
-        Pink,
-        White,
-        Black
+        Orange,
+        White
     }
 }

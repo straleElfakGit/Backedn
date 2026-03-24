@@ -13,5 +13,8 @@ public class SrbopolyContext : DbContext
     public DbSet<UserEntity> Users {get; set;}
     public DbSet<PlayerEntity> Players {get; set;}
 
+    public DbSet<LobbyEntity> Lobbies {get; set;}
+    public DbSet<LobbyPlayerEntity> LobbyPlayers {get; set;}
+
     public SrbopolyContext(DbContextOptions options) : base(options) {}
 }
